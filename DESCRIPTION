@@ -2,12 +2,12 @@ Package: stat302package
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Ian",
+           family = "Renshaw",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
+           email = "irenshaw@uw.edu",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+Description: A package for functions from the class STAT 302. For statstical inference, there is a function for t-tests and for fitting a linear model. For statstical prediction, there is a function for predicitng a class with the k-nearest neighbors algorithm and for calculating the cross-validation error from a random forest prediction.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
