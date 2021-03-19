@@ -1,0 +1,20 @@
+---
+title: "Project 3: stat302package Tutorial"
+author: Ian Renshaw
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{stat302package Tutorial}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(stat302package)
+```
