@@ -18,3 +18,100 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(stat302package)
 ```
+
+# Introduction
+
+This package is for functions from the class STAT 302. For statstical inference, there is a function for t-tests and for fitting a linear model. For statstical prediction, there is a function for predicitng a class with the k-nearest neighbors algorithm and for calculating the cross-validation error from a random forest prediction.
+
+Installation:
+```{r, echo = TRUE, eval = FALSE}
+devtools::install_github("irenshaw99/stat302package", build_vignette = TRUE, build_opts = c())
+library(stat302package)
+```
+
+## my_t.test
+
+This function is used for performin a t-test on data. For this tutorial, we will use the lifeExp data from my_gapminder.
+
+T-test for mu = 60, alternative: two-sided
+```{r, echo = TRUE, eval = FALSE}
+my_t.test(my_gapminder$lifeExp, "two.sided", 60)
+```
+
+The p-value is greater than 0.05 so the null hypothesis cannot be rejected; the chance that observed values are significantly greater or less than the mean is non negligible.
+
+
+T-test for mu = 60, alternative: less than
+```{r, echo = TRUE, eval = FALSE}
+my_t.test(my_gapminder$lifeExp, "less", 60)
+```
+
+The p-value is less than 0.05 so the null hypothesis can be rejected; there is a very small chance that observed values will be below 60.
+
+
+T-test for mu = 60, alternative: two-sided
+```{r, echo = TRUE, eval = FALSE}
+my_t.test(my_gapminder$lifeExp, "greater", 60)
+```
+
+The p-value is greater than 0.05 so the null hypothesis cannot be rejected; there is a significant chance that observed values will be greater than 60.
+
+
+## my_lm
+
+This function is used to fit data to a linear model. For this tutorial, we will be using data from my_gapminder. lifeExp will be the response variable while gdpPercap and continent will be the explanatory variables. 
+
+```{r, echo = TRUE, eval = TRUE}
+my_lm(lifeExp ~ gdpPercap + continent, my_gapminder)
+```
+
+Running the function tells us that the gdpPercap coefficient has a smaller weight than the other coefficients, but also has a smaller standard error. Our hypothesis test for this coefficient will tell us whether or not it has a significant influence on the linear model. In this case, since the p-value is less than 0.05, this means we can reject the null hypothesis, and therefore gdpPercap is significant to the linear model.
+
+## my_knn_cv
+
+This function is used to predict a class using the k-nearest neighbors algorithm. For this tutorial, we will be using data from my_penguins, predicting the class species using covariates bill_length_mm, bill_depth_mm, flipper_length_mm, and body_mass_g.
+
+```{r, echo = TRUE, eval = TRUE}
+my_knn_cv(my_penguins[complete.cases(my_penguins), c(1, 3:6)], "species", 5, 5)
+```
+
+Error comparison: knn from 1 to 10
+```{r, echo = TRUE, eval = TRUE}
+df <- data.frame(k_nn = 1, cv_error = my_knn_cv(my_penguins[complete.cases(my_penguins), c(1, 3:6)], "species", 1, 5)[[1]])
+for(i in 2:10) {
+  df <- rbind(df, data.frame(data.frame(k_nn = i, cv_error = my_knn_cv(my_penguins[complete.cases(my_penguins), c(1, 3:6)], "species", i, 5)[[1]])))
+}
+df
+```
+
+Since the training misclassification rate and the CV misclassification rate are the lowest when k_nn is 1, this is the model I would choose. In cross-validation, we split the data into different folds in which each fold uses a different subset of the data is used as training data for our prediction algorithm. The predicted class is then compared to the true class--the remaining data in the fold that was not training data--to calculate the mean squared error. The cross validation error is then the average of the mean squared errors across all folds. Since we have the lowest CV error when k_nn is 1, this would be the best model to use in practice.
+
+
+## my_rf_cv
+
+This function calculates the cross-validation error of a prediction from the random forest algorithm. For this tutorial we will be using data from my_penguins, predicting body_mass_g, using covariates bill_length_mm, bill_depth_mm, and flipper_length_mm.
+
+# ```{r, echo = TRUE, eval = TRUE}
+# # Random forest cross-validation with 2 folds
+# fold_2 <- c(1:30)
+# for(i in 1:30) {
+#   fold_2[i] <- my_rf_cv(2)
+# }
+# fold_2
+# 
+# # Random forest cross-validation with 5 folds
+# fold_5 <- c(1:30)
+# for(i in 1:30) {
+#   fold_5[i] <- my_rf_cv(5)
+# }
+# fold_5
+# 
+# # Random forest cross-validation with 10 folds
+# fold_10 <- c(1:30)
+# for(i in 1:30) {
+#   fold_10[i] <- my_rf_cv(10)
+# }
+# fold_10
+# ```
+
+

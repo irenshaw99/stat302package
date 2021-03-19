@@ -16,7 +16,8 @@
 #' @export
 
 my_knn_cv <- function(train, cl, k_nn, k_cv) {
-
+    library(dplyr)
+    library(class)
     fold <- sample(rep(1:k_cv, length = nrow(train)))
     train <- train %>% mutate("split" = fold)
     predict_matrix <- data.frame("cl" = train[, which(names(train) == cl)],

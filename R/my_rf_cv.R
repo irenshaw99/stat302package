@@ -13,7 +13,8 @@
 
 my_rf_cv <- function(k) {
     library(dplyr)
-    p_data <- my_penguins %>% drop_na()
+    library(randomForest)
+    p_data <- my_penguins[complete.cases(my_penguins), ]
     train <- p_data[, c(3:6)]
     cl <- "body_mass_g"
     fold <- sample(rep(1:k, length = nrow(train)))
