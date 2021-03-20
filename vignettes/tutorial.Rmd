@@ -17,24 +17,19 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(stat302package)
+library(ggplot2)
 ```
 
 # Introduction
 
 This package is for functions from STAT 302. For statstical inference, there is a function for t-tests and for fitting a linear model. For statstical prediction, there is a function for predicitng a class with the k-nearest neighbors algorithm and for calculating the cross-validation error from a random forest prediction.
 
-Installation:
-```{r, echo = TRUE, eval = FALSE}
-devtools::install_github("irenshaw99/stat302package", build_vignette = TRUE, build_opts = c())
-library(stat302package)
-```
-
-## my_t.test
+## my_t.test()
 
 This function is used for performin a t-test on data. For this tutorial, we will use the lifeExp data from my_gapminder.
 
 T-test for mu = 60, alternative: two-sided
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = TRUE}
 my_t.test(my_gapminder$lifeExp, "two.sided", 60)
 my_t.test(c(1:120), "two.sided", 60)
 ```
@@ -43,7 +38,7 @@ The p-value is greater than 0.05 so the null hypothesis cannot be rejected; the 
 
 
 T-test for mu = 60, alternative: less than
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = TRUE}
 my_t.test(my_gapminder$lifeExp, "less", 60)
 ```
 
@@ -51,14 +46,14 @@ The p-value is less than 0.05 so the null hypothesis can be rejected; there is a
 
 
 T-test for mu = 60, alternative: two-sided
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = TRUE}
 my_t.test(my_gapminder$lifeExp, "greater", 60)
 ```
 
 The p-value is greater than 0.05 so the null hypothesis cannot be rejected; there is a significant chance that observed values will be greater than 60.
 
 
-## my_lm
+## my_lm()
 
 This function is used to fit data to a linear model. For this tutorial, we will be using data from my_gapminder. lifeExp will be the response variable while gdpPercap and continent will be the explanatory variables. 
 
@@ -68,7 +63,20 @@ my_lm(lifeExp ~ gdpPercap + continent, my_gapminder)
 
 Running the function tells us that the gdpPercap coefficient has a smaller weight than the other coefficients, but also has a smaller standard error. Our hypothesis test for this coefficient will tell us whether or not it has a significant influence on the linear model. In this case, since the p-value is less than 0.05, this means we can reject the null hypothesis, and therefore gdpPercap is significant to the linear model.
 
-## my_knn_cv
+Fitted vs Actual values:
+```{r, echo = TRUE, eval = TRUE}
+model <- lm(lifeExp ~ gdpPercap + continent, my_gapminder)
+mod_fits <- fitted(model)
+df <- data.frame(actual = my_gapminder$lifeExp, fitted = mod_fits)
+ggplot(df, aes(x = fitted, y = actual)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, col = "red", lty = 2) + 
+  labs(x = "Fitted values", y = "Actual values", title = "Actual vs. Fitted")
+```
+This plot of the model's fitted values and the actual values suggets that for similar fitted values there can be a lot of varaince in the actual values. This trend is observed when fitted values are between about 45 and 65. In this range, the fitted values form several vertical clusters that span a wide range of actual values. For fitted values between about 65 and 85, the model seems to be more accurate as there is much less variance between fitted and actual values. There are also a few outlier points for fitted values above 80. From this, we can conclude that the model is only useful for values between about 65 and 85.
+
+
+## my_knn_cv()
 
 This function is used to predict a class using the k-nearest neighbors algorithm. For this tutorial, we will be using data from my_penguins, predicting the class species using covariates bill_length_mm, bill_depth_mm, flipper_length_mm, and body_mass_g.
 
@@ -88,33 +96,52 @@ df
 Since the training misclassification rate and the CV misclassification rate are the lowest when k_nn is 1, this is the model I would choose. In cross-validation, we split the data into different folds in which each fold uses a different subset of the data is used as training data for our prediction algorithm. The predicted class is then compared to the true class--the remaining data in the fold that was not training data--to calculate the mean squared error. The cross validation error is then the average of the mean squared errors across all folds. Since we have the lowest CV error when k_nn is 1, this would be the best model to use in practice.
 
 
-## my_rf_cv
+## my_rf_cv()
 
 This function calculates the cross-validation error of a prediction from the random forest algorithm. For this tutorial we will be using data from my_penguins, predicting body_mass_g, using covariates bill_length_mm, bill_depth_mm, and flipper_length_mm.
 
-# ```{r, echo = TRUE, eval = TRUE}
-# # Random forest cross-validation with 2 folds
-# fold_2 <- c(1:30)
-# for(i in 1:30) {
-#   fold_2[i] <- my_rf_cv(2)
-# }
-# fold_2
-# 
-# # Random forest cross-validation with 5 folds
-# fold_5 <- c(1:30)
-# for(i in 1:30) {
-#   fold_5[i] <- my_rf_cv(5)
-# }
-# fold_5
-# 
-# # Random forest cross-validation with 10 folds
-# fold_10 <- c(1:30)
-# for(i in 1:30) {
-#   fold_10[i] <- my_rf_cv(10)
-# }
-# fold_10
-# ```
+Calculating CVE 30 times for different folds
+```{r, echo = TRUE, eval = TRUE}
+# Random forest cross-validation with 2 folds
+fold_2 <- c(1:30)
+for(i in 1:30) {
+  fold_2[i] <- my_rf_cv(2)
+}
+fold_2
+
+# Random forest cross-validation with 5 folds
+fold_5 <- c(1:30)
+for(i in 1:30) {
+  fold_5[i] <- my_rf_cv(5)
+}
+fold_5
+# Random forest cross-validation with 10 folds
+fold_10 <- c(1:30)
+for(i in 1:30) {
+  fold_10[i] <- my_rf_cv(10)
+}
+fold_10
+```
+
+Boxplot comparing CVE for different numbers of folds across 30 simiulations:
+```{r, echo = TRUE, eval = TRUE}
+df <- data.frame(CVE = fold_2, folds = "2")
+df <- rbind(df, data.frame(CVE = fold_5, folds = "5"))
+df <- rbind(df, data.frame(CVE = fold_10, folds = "10"))
+ggplot(data = df, aes(x = folds, y = CVE)) +
+  geom_boxplot() + 
+  labs(x = "Folds", y = "Cross-Validation Error", title = "CV error comparison")
+```
+
+Comparison of the mean and standard deviation of the CVE for different numbers of folds across 30 simiulations:
+```{r, echo = TRUE, eval = TRUE}
+table <- data.frame(folds = c(2, 5, 10), CVE = c(mean(fold_2), mean(fold_5), mean(fold_10)), SD = c(sd(fold_2), sd(fold_5), sd(fold_10)))
+table
+```
+
+The boxplot and table suggets that the cross-validation error decreases as the number of folds increases. With 2 folds, the error seems to be significantly higher whereas the difference in error between 5 and 10 folds is less noticeable. However, the boxplots suggest that there is less variance in error when there are 10 folds, compared to when there are 5. The table suggests the same, as cross-validation with 10 folds had the lowest standard deviation in its error. The table also shows that with only 2 folds, the standard deviation is much higher. The results suggest that the mean and standard deviation of the error decrease as the number of folds increase. I believe that this is the case because when we have a higher number of folds, this means that the amount of data we use as training data for our prediction increases, meaning that there is less room for error.
 
 
 # Conclusion
 
+This package is the conclusion for STAT 302, showcasing newly developed skills in R package devlopment. The package includes several function in statistical inference and prediction that have been made as a part of the class curriculum.
