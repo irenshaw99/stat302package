@@ -11,7 +11,7 @@
 #' @return alternative String value of the parameter "alternative"
 #' @return p_val Numeric p-value
 #'
-#' @import stats
+#' @importFrom stats sd
 #'
 #' @examples
 #' my_t.test(c(1:100), "two.sided", 50)

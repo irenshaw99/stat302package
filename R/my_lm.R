@@ -6,6 +6,10 @@
 #' @param data Data frame to build a linear model for
 #'
 #' @return Table that reports the estimate, standard error, t-value, and probability > t for each coefficient, including the intercept
+#' @importFrom stats model.frame
+#' @importFrom stats model.matrix
+#' @importFrom stats model.response
+#' @importFrom stats pt
 #'
 #' @examples
 #' my_lm(lifeExp ~ gdpPercap, my_gapminder)

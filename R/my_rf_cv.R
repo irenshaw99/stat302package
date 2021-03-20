@@ -7,7 +7,9 @@
 #' @return Numeric with the cross-validation
 #'
 #' @import dplyr
-#' @import randomForest
+#' @importFrom randomForest randomForest
+#' @importFrom stats complete.cases
+#' @importFrom stats predict
 #'
 #' @examples
 #' my_rf_cv(5)
@@ -16,6 +18,7 @@
 
 my_rf_cv <- function(k) {
     p_data <- my_penguins[complete.cases(my_penguins), ]
+    my_penguins <- NULL
     train <- p_data[, c(3:6)]
     cl <- "body_mass_g"
     fold <- sample(rep(1:k, length = nrow(train)))
