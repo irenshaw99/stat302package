@@ -1,6 +1,6 @@
 Package: stat302package
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: Linear inference and prediction functions from STAT 302
+Version: 1.0
 Authors@R: 
     person(given = "Ian",
            family = "Renshaw",
