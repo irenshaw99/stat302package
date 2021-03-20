@@ -16,6 +16,9 @@ You can install the stat302package from GitHub with:
 # install.packages("devtools")
 devtools::install_github("irenshaw99/stat302package")
 library(stat302package)
+
+# Alternatively, install using these additional parameters to view the vignettes
+devtools::install_github("irenshaw99/stat302package", build_vignette = TRUE, build_opts = c())
 ```
 
 ## Use
