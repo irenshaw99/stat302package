@@ -36,6 +36,7 @@ This function is used for performin a t-test on data. For this tutorial, we will
 T-test for mu = 60, alternative: two-sided
 ```{r, echo = TRUE, eval = FALSE}
 my_t.test(my_gapminder$lifeExp, "two.sided", 60)
+my_t.test(c(1:120), "two.sided", 60)
 ```
 
 The p-value is greater than 0.05 so the null hypothesis cannot be rejected; the chance that observed values are significantly greater or less than the mean is non negligible.
