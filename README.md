@@ -10,7 +10,7 @@ The goal of stat302package is to ...
 
 ## Installation
 
-You can install the  stat302package from GitHub with:
+You can install the stat302package from GitHub with:
 
 ``` r
 # install.packages("devtools")
@@ -19,6 +19,9 @@ library(stat302package)
 ```
 
 ## Use
+
+The vignette gives a tutorial on how to use the 4 main functions of this package. The vignette can be viewed using this code:
+
 ``` r
 library(stat302package)
 # Use this to view the vignette in the stat302package HTML help
