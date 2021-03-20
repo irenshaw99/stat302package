@@ -8,8 +8,8 @@
 #' @return Table that reports the estimate, standard error, t-value, and probability > t for each coefficient, including the intercept
 #'
 #' @examples
-#' my_lm(mpg ~ wt, mtcars)
-#' my_lm(mpg ~ wt + cyl, mtcars)
+#' my_lm(lifeExp ~ gdpPercap, my_gapminder)
+#' my_lm(lifeExp ~ gdpPercap + continent, my_gapminder)
 #'
 #' @export
 my_lm <- function(formula, data) {

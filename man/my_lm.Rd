@@ -18,7 +18,7 @@ Table that reports the estimate, standard error, t-value, and probability > t fo
 This function is used to fit data to a linear model
 }
 \examples{
-my_lm(mpg ~ wt, mtcars)
-my_lm(mpg ~ wt + cyl, mtcars)
+my_lm(lifeExp ~ gdpPercap, my_gapminder)
+my_lm(lifeExp ~ gdpPercap + continent, my_gapminder)
 
 }

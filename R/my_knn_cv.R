@@ -9,9 +9,12 @@
 #'
 #' @return list with the cross-validation error and a vector of the predicted class
 #'
+#' @import dplyr
+#' @import class
+#'
 #' @examples
-#' my_knn(penguin_data, "species", 5, 5)
-#' my_knn(penguin_data[, 1:3], "species", 10, 10)
+#' my_knn_cv(my_penguins[complete.cases(my_penguins), c(1, 3:6)], "species", 5, 5)
+#' my_knn_cv(my_penguins[complete.cases(my_penguins), c(1, 3:5)], "species", 10, 10)
 #'
 #' @export
 
@@ -23,8 +26,8 @@ my_knn_cv <- function(train, cl, k_nn, k_cv) {
 
     for(i in 1:k_cv) {
         # define training and test data and predict using knn algorithm
-        data_train <- train %>% filter(split != i)
-        data_test <- train %>% filter(split == i)
+        data_train <- train %>% dplyr::filter(split != i)
+        data_test <- train %>% dplyr::filter(split == i)
         predict <- knn(data.frame(data_train[, -which(names(data_train) == cl)]),
                        data.frame(data_test[, -which(names(data_test) == cl)]),
                        as.vector(data_train %>% pull(cl)),

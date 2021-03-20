@@ -6,6 +6,9 @@
 #'
 #' @return Numeric with the cross-validation
 #'
+#' @import dplyr
+#' @import randomForest
+#'
 #' @examples
 #' my_rf_cv(5)
 #'
@@ -23,8 +26,8 @@ my_rf_cv <- function(k) {
 
     for(i in 1:k) {
         # define training and test data and predict using random forest algorithm
-        data_train <- train %>% filter(split != i)
-        data_test <- train %>% filter(split == i)
+        data_train <- train %>% dplyr::filter(split != i)
+        data_test <- train %>% dplyr::filter(split == i)
         model <- randomForest(body_mass_g ~ bill_length_mm + bill_depth_mm + flipper_length_mm, data = data_train, ntree = 100)
         prediction <- predict(model, data_test[, 1:3])
 

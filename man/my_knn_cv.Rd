@@ -22,7 +22,7 @@ list with the cross-validation error and a vector of the predicted class
 This function is used to predict a class using the k-nearest neighbors algorithm
 }
 \examples{
-my_knn(penguin_data, "species", 5, 5)
-my_knn(penguin_data[, 1:3], "species", 10, 10)
+my_knn_cv(my_penguins[complete.cases(my_penguins), c(1, 3:6)], "species", 5, 5)
+my_knn_cv(my_penguins[complete.cases(my_penguins), c(1, 3:5)], "species", 10, 10)
 
 }

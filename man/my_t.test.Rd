@@ -26,7 +26,8 @@ p_val Numeric p-value
 This function is used for performing a one-sample t-test
 }
 \examples{
-my_t.test(sample, "two.sided", 1)
-my_t.test(sample, "greater", .8)
+my_t.test(c(1:100), "two.sided", 50)
+my_t.test(c(1:100), "greater", 50)
+my_t.test(c(1:100), "less", 50)
 
 }
