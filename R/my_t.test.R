@@ -18,6 +18,8 @@
 #' my_t.test(c(1:100), "greater", 50)
 #' my_t.test(c(1:100), "less", 50)
 #'
+#' @keywords inference
+#'
 #' @export
 
 my_t.test <- function(x, alternative, mu) {

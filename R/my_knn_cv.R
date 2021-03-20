@@ -16,6 +16,8 @@
 #' my_knn_cv(my_penguins[complete.cases(my_penguins), c(1, 3:6)], "species", 5, 5)
 #' my_knn_cv(my_penguins[complete.cases(my_penguins), c(1, 3:5)], "species", 10, 10)
 #'
+#' @keywords prediction
+#'
 #' @export
 
 my_knn_cv <- function(train, cl, k_nn, k_cv) {

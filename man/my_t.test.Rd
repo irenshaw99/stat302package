@@ -31,3 +31,4 @@ my_t.test(c(1:100), "greater", 50)
 my_t.test(c(1:100), "less", 50)
 
 }
+\keyword{inference}

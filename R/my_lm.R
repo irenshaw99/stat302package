@@ -15,6 +15,8 @@
 #' my_lm(lifeExp ~ gdpPercap, my_gapminder)
 #' my_lm(lifeExp ~ gdpPercap + continent, my_gapminder)
 #'
+#' @keywords inference
+#'
 #' @export
 my_lm <- function(formula, data) {
     x <- model.matrix(formula, data)

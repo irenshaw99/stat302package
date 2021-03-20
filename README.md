@@ -3,24 +3,29 @@
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/irenshaw99/stat302package/workflows/R-CMD-check/badge.svg)](https://github.com/irenshaw99/stat302package/actions)
+[![codecov](https://codecov.io/gh/irenshaw99/stat302package/branch/master/graph/badge.svg?token=Y37J24FBA2)](https://codecov.io/gh/irenshaw99/stat302package)
 <!-- badges: end -->
 
 The goal of stat302package is to ...
 
 ## Installation
 
-You can install the released version of stat302package from [CRAN](https://CRAN.R-project.org) with:
+You can install the  stat302package from GitHub with:
 
 ``` r
-install.packages("stat302package")
+# install.packages("devtools")
+devtools::install_github("irenshaw99/stat302package")
+library(stat302package)
 ```
 
-## Example
-
-This is a basic example which shows you how to solve a common problem:
-
+## Use
 ``` r
 library(stat302package)
-## basic example code
+# Use this to view the vignette in the stat302package HTML help
+help(package = "stat302package", help_type = "html")
+# Use this to view the vignette as an isolated HTML file
+utils::browseVignettes(package = "stat302package")
 ```
+
+
 

@@ -19,3 +19,4 @@ This function calculates the cross-validation error of a prediction from the ran
 my_rf_cv(5)
 
 }
+\keyword{prediction}

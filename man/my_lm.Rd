@@ -22,3 +22,4 @@ my_lm(lifeExp ~ gdpPercap, my_gapminder)
 my_lm(lifeExp ~ gdpPercap + continent, my_gapminder)
 
 }
+\keyword{inference}
