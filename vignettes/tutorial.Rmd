@@ -21,7 +21,7 @@ library(stat302package)
 
 # Introduction
 
-This package is for functions from the class STAT 302. For statstical inference, there is a function for t-tests and for fitting a linear model. For statstical prediction, there is a function for predicitng a class with the k-nearest neighbors algorithm and for calculating the cross-validation error from a random forest prediction.
+This package is for functions from STAT 302. For statstical inference, there is a function for t-tests and for fitting a linear model. For statstical prediction, there is a function for predicitng a class with the k-nearest neighbors algorithm and for calculating the cross-validation error from a random forest prediction.
 
 Installation:
 ```{r, echo = TRUE, eval = FALSE}
